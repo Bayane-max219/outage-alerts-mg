@@ -1,0 +1,24 @@
+# Node / Angular / NestJS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+dist-ssr/
+build/
+coverage/
+
+# Angular cache
+frontend/.angular/cache/
+
+# Environment & secrets
+backend/.env
+backend/jirama.db
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

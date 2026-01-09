@@ -1,0 +1,31 @@
+<div class="page">
+  <h2>Tableau de bord administrateur</h2>
+
+  <div *ngIf="loading">Chargement...</div>
+  <div *ngIf="error" style="color: red">{{ error }}</div>
+
+  <div class="cards" *ngIf="!loading && !error">
+    <div class="card card-users">
+      <h3>Utilisateurs</h3>
+      <p class="stat-value">{{ usersCount }}</p>
+    </div>
+    <div class="card card-zones">
+      <h3>Zones</h3>
+      <p class="stat-value">{{ zonesCount }}</p>
+    </div>
+    <div class="card card-current">
+      <h3>Coupures en cours</h3>
+      <p class="stat-value">{{ currentOutagesCount }}</p>
+    </div>
+    <div class="card card-history">
+      <h3>Coupures totales (historique)</h3>
+      <p class="stat-value">{{ historyOutagesCount }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error" style="margin-top: 1.5rem">
+    <a class="button secondary" [routerLink]="['/admin/subscriptions']">
+      Voir les abonnements aux notifications
+    </a>
+  </div>
+</div>

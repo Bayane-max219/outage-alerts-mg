@@ -1,0 +1,34 @@
+/* Styles spécifiques au détail de coupure */
+
+.outage-detail-page {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.outage-detail-card {
+  max-width: 640px;
+}
+
+.outage-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(239, 108, 0, 0.08);
+}
+
+.outage-avatar mat-icon {
+  color: #ef6c00;
+}
+
+.state-message {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.state-message.error {
+  color: #c62828;
+}

@@ -1,0 +1,56 @@
+<div class="subscription-page page">
+  <mat-card class="subscription-card">
+    <mat-card-header>
+      <div mat-card-avatar class="subscription-avatar">
+        <mat-icon>notifications_active</mat-icon>
+      </div>
+      <mat-card-title>S'abonner aux alertes par zone</mat-card-title>
+      <mat-card-subtitle>
+        Recevez un email lorsqu'une nouvelle coupure est programmée dans votre zone.
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="error" class="alert alert-error">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ error }}</span>
+      </div>
+      <div *ngIf="success" class="alert alert-success">
+        <mat-icon>check_circle</mat-icon>
+        <span>{{ success }}</span>
+      </div>
+
+      <form (ngSubmit)="submit()" class="subscription-form">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            [(ngModel)]="userEmail"
+            name="email"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Zone</mat-label>
+          <select
+            matNativeControl
+            [(ngModel)]="selectedZoneId"
+            name="zoneId"
+            required
+          >
+            <option [ngValue]="null">Sélectionner une zone</option>
+            <option *ngFor="let z of zones" [ngValue]="z.id">
+              {{ z.city }} - {{ z.name }}
+            </option>
+          </select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+          {{ loading ? 'Enregistrement...' : "S'abonner" }}
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

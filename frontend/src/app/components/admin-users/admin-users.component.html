@@ -1,0 +1,62 @@
+<div class="page">
+  <h2>Gestion des utilisateurs</h2>
+
+  <div *ngIf="error" style="color: red">{{ error }}</div>
+  <div *ngIf="success" style="color: green">{{ success }}</div>
+
+  <form (ngSubmit)="createUser()" class="form" style="margin-bottom: 1.5rem">
+    <div class="form-group">
+      <label>Nom</label>
+      <input type="text" [(ngModel)]="name" name="name" required />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label>Rôle</label>
+      <select [(ngModel)]="role" name="role">
+        <option value="AGENT">Agent</option>
+        <option value="ADMIN">Administrateur</option>
+      </select>
+    </div>
+
+    <button class="button primary" type="submit" [disabled]="loading">
+      {{ loading ? 'Création...' : 'Créer' }}
+    </button>
+  </form>
+
+  <table class="table" *ngIf="users.length">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button class="button danger" type="button" (click)="deleteUser(user)">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!users.length && !loading">Aucun utilisateur.</div>
+</div>

@@ -1,0 +1,11 @@
+cd "c:\Users\miguel\Desktop\Projet janvier 2026\Jirama\backend"
+npm run start:dev
+
+cd "c:\Users\miguel\Desktop\Projet janvier 2026\Jirama\frontend"
+npm run start
+
+compte teste:
+{
+  "email": "admin@jirama.local",
+  "password": "admin123"
+}

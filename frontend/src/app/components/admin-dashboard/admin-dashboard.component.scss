@@ -1,0 +1,51 @@
+/* Styles pour le tableau de bord administrateur */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.card {
+  text-align: left;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+}
+
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.card .stat-value {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.card-users {
+  background: linear-gradient(135deg, #ef6c00, #ff9800);
+  color: #fff3e0;
+}
+
+.card-zones {
+  background: linear-gradient(135deg, #2e7d32, #66bb6a);
+  color: #e8f5e9;
+}
+
+.card-current {
+  background: linear-gradient(135deg, #c62828, #ef5350);
+  color: #ffebee;
+}
+
+.card-history {
+  background: linear-gradient(135deg, #374151, #6b7280);
+  color: #e5e7eb;
+}

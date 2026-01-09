@@ -1,0 +1,133 @@
+<div class="page">
+  <h2 *ngIf="!isEditMode">Créer une coupure</h2>
+  <h2 *ngIf="isEditMode">Mettre à jour une coupure</h2>
+
+  <div *ngIf="error" style="color: red">{{ error }}</div>
+  <div *ngIf="success" style="color: green">{{ success }}</div>
+
+  <form
+    *ngIf="!isEditMode"
+    (ngSubmit)="submitCreate()"
+    class="form"
+  >
+    <div class="form-group">
+      <label>Type</label>
+      <select [(ngModel)]="type" name="type" required>
+        <option value="ELECTRICITY">Électricité</option>
+        <option value="WATER">Eau</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Zone</label>
+      <select [(ngModel)]="zoneId" name="zoneId" required>
+        <option [ngValue]="null">Sélectionner une zone</option>
+        <option *ngFor="let z of zones" [ngValue]="z.id">
+          {{ z.city }} - {{ z.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Date / heure de début</label>
+      <input
+        type="datetime-local"
+        [(ngModel)]="startTime"
+        name="startTime"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Date / heure de fin estimée</label>
+      <input
+        type="datetime-local"
+        [(ngModel)]="endTimeEstimated"
+        name="endTimeEstimated"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Statut initial</label>
+      <select [(ngModel)]="status" name="status">
+        <option value="PLANNED">Planifiée</option>
+        <option value="ONGOING">En cours</option>
+        <option value="RESTORED">Rétablie</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea
+        [(ngModel)]="description"
+        name="description"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <button class="button primary" type="submit" [disabled]="loading">
+      {{ loading ? 'Enregistrement...' : 'Enregistrer' }}
+    </button>
+  </form>
+
+  <form *ngIf="isEditMode" (ngSubmit)="submitEdit()" class="form">
+    <div class="form-group">
+      <label>Type</label>
+      <select [(ngModel)]="type" name="type" required>
+        <option value="ELECTRICITY">Électricité</option>
+        <option value="WATER">Eau</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Zone</label>
+      <select [(ngModel)]="zoneId" name="zoneId" required>
+        <option [ngValue]="null">Sélectionner une zone</option>
+        <option *ngFor="let z of zones" [ngValue]="z.id">
+          {{ z.city }} - {{ z.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Date / heure de début</label>
+      <input
+        type="datetime-local"
+        [(ngModel)]="startTime"
+        name="startTime"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Date / heure de fin estimée</label>
+      <input
+        type="datetime-local"
+        [(ngModel)]="endTimeEstimated"
+        name="endTimeEstimated"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Statut</label>
+      <select [(ngModel)]="status" name="status" required>
+        <option value="PLANNED">Planifiée</option>
+        <option value="ONGOING">En cours</option>
+        <option value="RESTORED">Rétablie</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea
+        [(ngModel)]="description"
+        name="description"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <button class="button primary" type="submit" [disabled]="loading">
+      {{ loading ? 'Mise à jour...' : 'Mettre à jour' }}
+    </button>
+  </form>
+</div>

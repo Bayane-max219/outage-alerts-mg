@@ -1,0 +1,52 @@
+<div class="page">
+  <h2>Gestion des zones</h2>
+
+  <div *ngIf="error" style="color: red">{{ error }}</div>
+  <div *ngIf="success" style="color: green">{{ success }}</div>
+
+  <form (ngSubmit)="createZone()" class="form" style="margin-bottom: 1.5rem">
+    <div class="form-group">
+      <label>Ville</label>
+      <input type="text" [(ngModel)]="newCity" name="city" required />
+    </div>
+    <div class="form-group">
+      <label>Nom de la zone</label>
+      <input type="text" [(ngModel)]="newName" name="name" required />
+    </div>
+    <div class="form-group">
+      <label>
+        <input type="checkbox" [(ngModel)]="newIsActive" name="isActive" />
+        Active
+      </label>
+    </div>
+
+    <button class="button primary" type="submit" [disabled]="loading">
+      {{ loading ? 'Création...' : 'Créer' }}
+    </button>
+  </form>
+
+  <table class="table" *ngIf="zones.length">
+    <thead>
+      <tr>
+        <th>Ville</th>
+        <th>Nom</th>
+        <th>Active</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let zone of zones">
+        <td>{{ zone.city }}</td>
+        <td>{{ zone.name }}</td>
+        <td>{{ zone.isActive ? 'Oui' : 'Non' }}</td>
+        <td>
+          <button class="button danger" type="button" (click)="deleteZone(zone)">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!zones.length && !loading">Aucune zone.</div>
+</div>

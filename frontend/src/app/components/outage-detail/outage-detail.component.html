@@ -1,0 +1,56 @@
+<div class="outage-detail-page page">
+  <mat-card *ngIf="!loading && outage" class="outage-detail-card">
+    <mat-card-header>
+      <div mat-card-avatar class="outage-avatar">
+        <mat-icon *ngIf="outage.type === 'WATER'">water_drop</mat-icon>
+        <mat-icon *ngIf="outage.type === 'ELECTRICITY'">bolt</mat-icon>
+      </div>
+      <mat-card-title>Coupure #{{ outage.id }}</mat-card-title>
+      <mat-card-subtitle>
+        {{ outage.zone.city }} - {{ outage.zone.name }}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>
+        <strong>Type :</strong>
+        {{ outage.type === 'WATER' ? 'Eau' : 'Électricité' }}
+      </p>
+      <p>
+        <strong>Début :</strong>
+        {{ outage.startTime | date: 'short' }}
+      </p>
+      <p>
+        <strong>Fin estimée :</strong>
+        {{ outage.endTimeEstimated | date: 'short' }}
+      </p>
+      <p>
+        <strong>Statut :</strong>
+        {{ outage.status === 'PLANNED'
+          ? 'Prévue'
+          : outage.status === 'ONGOING'
+          ? 'En cours'
+          : 'Rétablie' }}
+      </p>
+      <p *ngIf="outage.description">
+        <strong>Description :</strong>
+        {{ outage.description }}
+      </p>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-stroked-button color="primary" routerLink="/">
+        Retour aux coupures
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div *ngIf="loading" class="state-message">
+    <mat-progress-spinner diameter="32" mode="indeterminate"></mat-progress-spinner>
+    <span>Chargement des détails de la coupure...</span>
+  </div>
+  <div *ngIf="!loading && error" class="state-message error">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ error }}</span>
+  </div>
+</div>

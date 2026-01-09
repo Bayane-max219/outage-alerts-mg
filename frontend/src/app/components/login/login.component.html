@@ -1,0 +1,44 @@
+<div class="page">
+  <div style="max-width: 420px; margin: 0 auto">
+    <mat-card>
+      <h2 style="margin-top: 0; margin-bottom: 1rem">Connexion</h2>
+
+      <div *ngIf="error" style="color: #b91c1c; margin-bottom: 0.75rem">
+        {{ error }}
+      </div>
+
+      <form (ngSubmit)="submit()">
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 0.75rem">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="width: 100%; margin-bottom: 1rem">
+          <mat-label>Mot de passe</mat-label>
+          <input
+            matInput
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+          />
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loading"
+        >
+          {{ loading ? 'Connexion...' : 'Se connecter' }}
+        </button>
+      </form>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="page">
+  <h2>Abonnements aux notifications</h2>
+
+  <div *ngIf="error" style="color: red">{{ error }}</div>
+
+  <div *ngIf="loading">Chargement...</div>
+
+  <table class="table" *ngIf="!loading && subscriptions.length">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Zone</th>
+        <th>Ville</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sub of subscriptions">
+        <td>{{ sub.userEmail }}</td>
+        <td>{{ sub.zone?.name }}</td>
+        <td>{{ sub.zone?.city }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && !subscriptions.length">Aucun abonnement.</div>
+</div>

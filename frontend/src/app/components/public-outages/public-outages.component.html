@@ -1,0 +1,147 @@
+<div class="public-layout">
+  <section class="public-hero">
+    <div class="public-hero-overlay">
+      <div class="public-hero-text">
+        <h1>Plateforme officielle JIRAMA  Suivi des coupures</h1>
+        <p>
+          Informations officielles sur les coupures d'eau et d'électricité, mises à jour
+          automatiquement.
+        </p>
+
+        <div class="public-hero-stats">
+          <div class="hero-stat">
+            <span class="label">Coupures en cours</span>
+            <span class="value">{{ totalOutages }}</span>
+          </div>
+          <div class="hero-stat">
+            <span class="label">Électricité</span>
+            <span class="value">{{ electricityOutages }}</span>
+          </div>
+          <div class="hero-stat">
+            <span class="label">Eau</span>
+            <span class="value">{{ waterOutages }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="public-content page">
+    <mat-card class="filters-card">
+      <mat-card-title>Filtres</mat-card-title>
+      <mat-card-content>
+        <form class="filters-form">
+          <mat-form-field appearance="fill">
+            <mat-label>Zone</mat-label>
+            <select
+              matNativeControl
+              [(ngModel)]="filterZoneId"
+              name="filterZoneId"
+              (change)="loadOutages()"
+            >
+              <option [ngValue]="null">Toutes les zones</option>
+              <option *ngFor="let z of zones" [ngValue]="z.id">
+                {{ z.city }} - {{ z.name }}
+              </option>
+            </select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Type</mat-label>
+            <mat-select
+              [(ngModel)]="filterType"
+              name="filterType"
+              (selectionChange)="loadOutages()"
+            >
+              <mat-option value="">Tous</mat-option>
+              <mat-option value="WATER">Eau</mat-option>
+              <mat-option value="ELECTRICITY">Électricité</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="outages-card">
+      <mat-card-title>Liste des coupures</mat-card-title>
+      <mat-card-subtitle>
+        Données fournies par JIRAMA pour les zones actuellement impactées.
+      </mat-card-subtitle>
+
+      <mat-card-content>
+        <div *ngIf="loading" class="state-message">
+          <mat-progress-spinner diameter="32" mode="indeterminate"></mat-progress-spinner>
+          <span>Chargement des coupures...</span>
+        </div>
+
+        <div *ngIf="!loading && error" class="state-message error">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ error }}</span>
+        </div>
+
+        <table
+          class="table"
+          *ngIf="!loading && !error && outages.length"
+        >
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Zone</th>
+              <th>Début</th>
+              <th>Fin estimée</th>
+              <th>Statut</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let o of outages">
+              <td>
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    water: o.type === 'WATER',
+                    electricity: o.type === 'ELECTRICITY'
+                  }"
+                >
+                  {{ o.type === 'WATER' ? 'Eau' : 'Électricité' }}
+                </span>
+              </td>
+              <td>{{ o.zone.city }} - {{ o.zone.name }}</td>
+              <td>{{ o.startTime | date: 'short' }}</td>
+              <td>{{ o.endTimeEstimated | date: 'short' }}</td>
+              <td>
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    'status-planned': o.status === 'PLANNED',
+                    'status-ongoing': o.status === 'ONGOING',
+                    'status-restored': o.status === 'RESTORED'
+                  }"
+                >
+                  {{ o.status === 'PLANNED'
+                    ? 'Prévue'
+                    : o.status === 'ONGOING'
+                    ? 'En cours'
+                    : 'Rétablie' }}
+                </span>
+              </td>
+              <td>
+                <a class="button secondary" [routerLink]="['/outages', o.id]">
+                  Détails
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div
+          *ngIf="!loading && !error && !outages.length"
+          class="state-message"
+        >
+          <mat-icon>info</mat-icon>
+          <span>Aucune coupure trouvée pour ces filtres.</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</div>

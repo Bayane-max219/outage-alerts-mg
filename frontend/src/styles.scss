@@ -1,0 +1,196 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  background-color: #f5f5f5;
+  color: #1f2933;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-color: #ef6c00;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-header a {
+  color: #e5e7eb;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+
+.app-header a.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.app-main {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+/* Layout helpers for pages & forms */
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.page h2 {
+  margin: 0 0 1rem;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem 1.5rem;
+  max-width: 800px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.375rem;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  background-color: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #fb8c00;
+  box-shadow: 0 0 0 1px #fb8c0033;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.button.primary {
+  background-color: #fb8c00;
+  color: #ffffff;
+}
+
+.button.secondary {
+  background-color: #e5e7eb;
+  color: #111827;
+  border-color: #9ca3af;
+}
+
+.button.danger {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+.button.primary:hover {
+  background-color: #ef6c00;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.2);
+}
+
+.button.secondary:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.button.danger:hover {
+  background-color: #b91c1c;
+  box-shadow: 0 1px 2px rgba(127, 29, 29, 0.25);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.table th {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.badge.water {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge.electricity {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.badge.status-planned {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.badge.status-ongoing {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge.status-restored {
+  background-color: #dcfce7;
+  color: #166534;
+}

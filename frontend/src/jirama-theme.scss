@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+
+$jirama-primary: mat.define-palette(mat.$deep-orange-palette, 600);
+$jirama-accent: mat.define-palette(mat.$green-palette, 700);
+$jirama-warn: mat.define-palette(mat.$red-palette);
+
+// Custom font stack for the JIRAMA institutional theme
+$jirama-font-family: 'Roboto', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+$jirama-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $jirama-primary,
+      accent: $jirama-accent,
+      warn: $jirama-warn,
+    ),
+    typography: mat.define-typography-config(
+      $font-family: $jirama-font-family,
+    ),
+  )
+);
+
+@include mat.all-component-themes($jirama-theme);
