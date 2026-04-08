@@ -13,7 +13,7 @@ import { RolesGuard } from './common/guards/roles.guard';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'jirama.db',
+      database: process.env.DATABASE_PATH || 'jirama.db',
       autoLoadEntities: true,
       synchronize: true,
     }),
