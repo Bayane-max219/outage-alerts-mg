@@ -2,12 +2,12 @@
 
 > ⚠️ Projet purement **personnel**, inspiré du contexte et du design JIRAMA mais **sans aucun lien officiel** avec la JIRAMA.
 
-Ce projet est une **plateforme complète** de suivi des coupures (électricité / eau) inspirée du contexte JIRAMA, avec :
+Ce projet est une **plateforme complète** de suivi des coupures (électricité / eau) inspirée du contexte JIRAMA, avec :
 
-- **Backend** : API NestJS + TypeORM + SQLite + JWT + rôles + Swagger + cron
-- **Frontend** : Angular 17 + Angular Material (UI formulaires) + guards + routing (public / agent / admin)
+- **Backend** : API NestJS + TypeORM + SQLite + JWT + rôles + Swagger + cron
+- **Frontend** : Angular 17 + Angular Material (UI formulaires) + guards + routing (public / agent / admin)
 
-Il est conçu comme une maquette fonctionnelle pour :
+Il est conçu comme une maquette fonctionnelle pour :
 
 - Centraliser les **coupures planifiées et en cours**
 - Permettre aux **agents / admins** de les gérer
@@ -17,33 +17,33 @@ Il est conçu comme une maquette fonctionnelle pour :
 
 ## 1. Architecture générale
 
-Arborescence principale :
+Arborescence principale :
 
 - `backend/` : API NestJS
 - `frontend/` : SPA Angular
 
 ### Backend (NestJS)
 
-Modules principaux :
+Modules principaux :
 
-- `auth` : authentification JWT, login, validation des identifiants
-- `users` : gestion des utilisateurs (`ADMIN` / `AGENT`)
-- `zones` : gestion des zones géographiques
-- `outages` : gestion des coupures (création, mise à jour, statut, historique)
-- `subscriptions` : abonnements par email à une zone
+- `auth` : authentification JWT, login, validation des identifiants
+- `users` : gestion des utilisateurs (`ADMIN` / `AGENT`)
+- `zones` : gestion des zones géographiques
+- `outages` : gestion des coupures (création, mise à jour, statut, historique)
+- `subscriptions` : abonnements par email à une zone
 
-Technos & briques :
+Technos & briques :
 
 - **NestJS 10**
 - **TypeORM + SQLite** (`jirama.db`, `synchronize: true` pour la démo)
 - **JWT** pour sécuriser l'API
-- **Guards** : `JwtAuthGuard`, `RolesGuard`
+- **Guards** : `JwtAuthGuard`, `RolesGuard`
 - **Cron** (`@nestjs/schedule`) pour fermer automatiquement les coupures expirées
 - **Swagger** pour la documentation API (`/api-docs`)
 
 ### Frontend (Angular)
 
-Zones fonctionnelles :
+Zones fonctionnelles :
 
 - **Public**
   - Liste des coupures en cours/prévues, avec filtres (zone, type)
@@ -58,7 +58,7 @@ Zones fonctionnelles :
   - Gestion des utilisateurs (ADMIN / AGENT)
   - Gestion des zones
 
-Technos & briques :
+Technos & briques :
 
 - **Angular 17**
 - **Angular Material 17** (formulaires, boutons, cards)
@@ -67,76 +67,101 @@ Technos & briques :
 
 ---
 
-## 2. Prérequis
+## 2. Démarrage rapide avec Docker 🐳
+
+Le projet est **conteneurisé avec Docker** — démarrage en une seule commande.
+
+### Prérequis
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installé
+
+### Lancement
+```bash
+docker compose up -d --build
+```
+
+| URL | Service |
+|---|---|
+| `http://localhost` | Frontend Angular |
+| `http://localhost:3000` | API NestJS |
+| `http://localhost:3000/api-docs` | Documentation Swagger |
+
+### Architecture Docker
+| Service | Technologie | Rôle |
+|---|---|---|
+| `frontend` | Nginx + Angular 17 | SPA (multi-stage build) |
+| `backend` | Node 20 + NestJS | API REST + SQLite persistant |
+
+La base SQLite est persistée dans un volume Docker (`db_data`).
+
+### Commandes utiles
+```bash
+docker compose logs -f backend    # Voir les logs API
+docker compose down               # Arrêter
+docker compose down -v            # Arrêter + supprimer les données
+```
+
+---
+
+## 3. Prérequis (installation manuelle)
 
 - Node.js 18+ recommandé
 - npm
 
 ---
 
-## 3. Installation des dépendances
-
-Dans un terminal :
+## 4. Installation des dépendances
 
 ```bash
-cd "c:\Users\miguel\Desktop\Projet janvier 2026\Jirama"
-```
-
-### Backend
-
-```bash
+# Backend
 cd backend
 npm install
-```
 
-### Frontend
-
-```bash
+# Frontend
 cd ../frontend
 npm install
 ```
 
 ---
 
-## 4. Lancement du projet (backend + frontend)
+## 5. Lancement du projet (backend + frontend)
 
 Ouvrez **deux terminaux**.
 
 ### Terminal 1 — Backend NestJS
 
 ```bash
-cd "c:\Users\miguel\Desktop\Projet janvier 2026\Jirama\backend"
+cd backend
 npm run start:dev
 ```
 
-Le backend écoute par défaut sur :
+Le backend écoute par défaut sur :
 
 - `http://localhost:3000`
-- Documentation Swagger : `http://localhost:3000/api-docs`
+- Documentation Swagger : `http://localhost:3000/api-docs`
 
 ### Terminal 2 — Frontend Angular
 
 ```bash
-cd "c:\Users\miguel\Desktop\Projet janvier 2026\Jirama\frontend"
+cd frontend
 npm run start
 ```
 
-Le frontend est accessible sur :
+Le frontend est accessible sur :
 
 - `http://localhost:4200`
 
 ---
 
-## 5. Comptes et rôles
+## 6. Comptes et rôles
 
-Il existe deux rôles principaux dans l'application :
+Il existe deux rôles principaux dans l'application :
 
-- **ADMIN** : administrateur (gestion des utilisateurs, zones, accès dashboard)
-- **AGENT** : agent JIRAMA (gestion des coupures)
+- **ADMIN** : administrateur (gestion des utilisateurs, zones, accès dashboard)
+- **AGENT** : agent JIRAMA (gestion des coupures)
 
 ### Compte administrateur par défaut
 
-Au premier démarrage du backend, si aucun utilisateur n'existe, un **compte admin par défaut** est créé :
+Au premier démarrage du backend, si aucun utilisateur n'existe, un **compte admin par défaut** est créé :
 
 ```json
 {
@@ -151,21 +176,21 @@ Ce compte permet d'accéder à l'espace admin et de créer d'autres utilisateurs
 
 - Se connecter avec le compte admin
 - Aller sur **"Admin utilisateurs"** (`/admin/users`)
-- Remplir le formulaire :
+- Remplir le formulaire :
   - Nom
   - Email
   - Mot de passe
-  - Rôle : `AGENT` ou `ADMIN`
+  - Rôle : `AGENT` ou `ADMIN`
 
 Les utilisateurs ainsi créés peuvent ensuite se connecter via la page **Login**.
 
 ---
 
-## 6. Parcours fonctionnels
+## 7. Parcours fonctionnels
 
-### 6.1. Utilisateur public (client / citoyen)
+### 7.1. Utilisateur public (client / citoyen)
 
-Sans être connecté, un utilisateur peut :
+Sans être connecté, un utilisateur peut :
 
 - Consulter les **coupures en cours / prévues** sur la page d'accueil (`/`)
 - Voir le **détail** d'une coupure (`/outages/:id`)
@@ -177,7 +202,7 @@ Sans être connecté, un utilisateur peut :
 - Champ **Zone** (liste des zones actives)
 - Bouton **"S'abonner"**
 
-Côté backend, un enregistrement est créé dans la table `subscriptions` :
+Côté backend, un enregistrement est créé dans la table `subscriptions` :
 
 - `userEmail`
 - `zoneId`
@@ -186,11 +211,11 @@ Lors de la création d'une nouvelle coupure, les abonnés de la zone sont listé
 
 ---
 
-### 6.2. Agent JIRAMA
+### 7.2. Agent JIRAMA
 
-Rôle : `AGENT` (ou `ADMIN`, qui peut aussi agir comme agent).
+Rôle : `AGENT` (ou `ADMIN`, qui peut aussi agir comme agent).
 
-Fonctionnalités :
+Fonctionnalités :
 
 - **Liste des coupures** (`/agent/outages`)
   - Vue tableau avec type, zone, ville, dates, statut
@@ -198,7 +223,7 @@ Fonctionnalités :
   - Bouton **Nouvelle coupure**
 
 - **Création d'une coupure** (`/agent/outages/new`)
-  - Type : Eau / Électricité
+  - Type : Eau / Électricité
   - Zone
   - Date/heure de début
   - Date/heure de fin estimée
@@ -206,20 +231,20 @@ Fonctionnalités :
   - Description
 
 - **Édition d'une coupure** (`/agent/outages/:id/edit`)
-  - Modification **complète** de la coupure : type, zone, dates, statut, description.
+  - Modification **complète** de la coupure : type, zone, dates, statut, description.
 
-L'accès à ces routes est protégé par :
+L'accès à ces routes est protégé par :
 
-- `AuthGuard` : utilisateur doit être connecté
-- `RoleGuard` : rôle `AGENT` ou `ADMIN`
+- `AuthGuard` : utilisateur doit être connecté
+- `RoleGuard` : rôle `AGENT` ou `ADMIN`
 
 ---
 
-### 6.3. Administrateur JIRAMA
+### 7.3. Administrateur JIRAMA
 
-Rôle : `ADMIN`.
+Rôle : `ADMIN`.
 
-Fonctionnalités :
+Fonctionnalités :
 
 - **Tableau de bord** (`/admin/dashboard`)
   - Nombre d'utilisateurs
@@ -242,13 +267,13 @@ L'accès à ces routes est réservé au rôle `ADMIN`.
 
 ---
 
-## 7. API & documentation Swagger
+## 8. API & documentation Swagger
 
-L'API backend est documentée via **Swagger** :
+L'API backend est documentée via **Swagger** :
 
-- URL : `http://localhost:3000/api-docs`
+- URL : `http://localhost:3000/api-docs`
 
-Vous y trouverez :
+Vous y trouverez :
 
 - `POST /auth/login` — connexion
 - `GET /users`, `POST /users`, `DELETE /users/{id}` — gestion utilisateurs (ADMIN)
@@ -261,26 +286,26 @@ Les routes sensibles sont protégées par JWT + rôles.
 
 ---
 
-## 8. Cron : fermeture automatique des coupures expirées
+## 9. Cron : fermeture automatique des coupures expirées
 
-Un job cron NestJS tourne **toutes les minutes** :
+Un job cron NestJS tourne **toutes les minutes** :
 
-- Fichier : `backend/src/outages/outages.service.ts`
-- Méthode : `autoCloseExpiredOutages()`
+- Fichier : `backend/src/outages/outages.service.ts`
+- Méthode : `autoCloseExpiredOutages()`
 
-Logique :
+Logique :
 
-- Cherche toutes les coupures avec :
+- Cherche toutes les coupures avec :
   - `endTimeEstimated <= maintenant`
   - `status` ∈ { `PLANNED`, `ONGOING` }
 - Met leur statut à `RESTORED`
 - Sauvegarde en base.
 
-Ainsi, les coupures « planifiées » ou « en cours » basculent automatiquement en **rétablies** lorsque l'heure de fin estimée est dépassée.
+Ainsi, les coupures « planifiées » ou « en cours » basculent automatiquement en **rétablies** lorsque l'heure de fin estimée est dépassée.
 
 ---
 
-## 9. Notes et limites (maquette demo)
+## 10. Notes et limites (maquette demo)
 
 - La base SQLite (`jirama.db`) est recréée / mise à jour automatiquement avec `synchronize: true`. Pour un environnement de production, il faudrait passer par des migrations.
 - Les **notifications d'abonnement** sont pour l'instant des `console.log`. Une intégration réelle (email / SMS) peut être branchée par-dessus le service `SubscriptionsService`.
@@ -288,12 +313,12 @@ Ainsi, les coupures « planifiées » ou « en cours » basculent automatiqu
 
 ---
 
-## 10. Résumé
+## 11. Résumé
 
-Le projet répond aux objectifs du cahier des charges :
+Le projet répond aux objectifs du cahier des charges :
 
 - Backend NestJS complet (auth JWT, rôles, zones, coupures, abonnements, cron, SQLite, Swagger)
-- Frontend Angular : partie publique, espace agent, espace admin
+- Frontend Angular : partie publique, espace agent, espace admin
 - UI formulaires améliorée avec Angular Material et styles globaux cohérents
 - Documentation API (Swagger) + ce README pour l'installation et l'architecture
 
@@ -301,9 +326,9 @@ Le tout forme une **plateforme cohérente et exploitable** pour démontrer un sy
 
 ---
 
-## 11. Captures d'écran
+## 12. Captures d'écran
 
-Quelques aperçus de l'interface (issues du dossier `screenshoots/`) :
+Quelques aperçus de l'interface (issues du dossier `screenshoots/`) :
 
 - **Accueil public (liste des coupures)**
 
@@ -344,4 +369,3 @@ Quelques aperçus de l'interface (issues du dossier `screenshoots/`) :
 - **Exemple de message d'alerte / notification**
 
   ![Message](screenshoots/10-Message.jpg)
-
